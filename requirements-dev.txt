@@ -1,0 +1,3 @@
+-r requirements.txt
+-r ai_service/requirements.txt
+pytest==8.4.2

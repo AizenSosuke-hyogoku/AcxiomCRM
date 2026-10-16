@@ -1,0 +1,44 @@
+services:
+  ai-service:
+    build: ./ai_service
+    restart: unless-stopped
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"]
+      interval: 20s
+      timeout: 4s
+      retries: 5
+      start_period: 30s
+    networks: [crmnet]
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      ai-service:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: sqlite:////data/acxiomcrm.db
+      DATA_DIR: /data
+      AI_SERVICE_URL: http://ai-service:8000
+      APP_ENV: ${APP_ENV:-development}
+    ports:
+      - "8080:8080"
+    volumes:
+      - crmdata:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health', timeout=2)"]
+      interval: 20s
+      timeout: 4s
+      retries: 5
+      start_period: 15s
+    networks: [crmnet]
+networks:
+  crmnet:
+    driver: bridge
+volumes:
+  crmdata:
