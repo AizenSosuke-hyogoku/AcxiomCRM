@@ -4,6 +4,8 @@
 
 > Demo data is fictional. Scores are trained on synthetic examples and are for prioritisation only, not validated real-world conversion probabilities.
 
+<img width="948" height="473" alt="image" src="https://github.com/user-attachments/assets/9624e8a1-d46a-42c9-b02e-12f8371f4087" />
+
 > **Stack note:** the detailed evaluator document names ASP.NET Core Identity/Razor in a few sections, while the attached master-build note explicitly allows an all-Python implementation when .NET 8 is unavailable. This submission uses FastAPI/SQLAlchemy with the same role, validation, CSRF, lockout, audit, API and workflow behaviours. If the evaluator treats ASP.NET Core as a strict technology gate rather than a suggested implementation, this is a stack deviation to disclose honestly.
 
 ## Run it with Docker (recommended)
